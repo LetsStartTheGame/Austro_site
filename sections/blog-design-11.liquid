@@ -1,0 +1,332 @@
+<div data-section-id="{{ section.id }}"  data-section-type="blog-design-11" class="blog-design-11">
+  <div class="container-bg">
+    <div class="blog-post">
+      <div class="grid">  
+        {% if section.settings.title != blank  %}
+        <div class="section-header section-header--small">
+          <div class="border-title wow bounce">
+            {% if section.settings.title != blank %} <h2 style="color:{{ section.settings.title_clr }};">{{ section.settings.title }}</h2>{% endif %}   
+          </div>
+        </div>
+          <div class="dt-sc-hr-invisible-very-small"></div>
+        {% endif %} 
+        <div class="home-blog blog-section owl-carousel owl-theme skewBlogType {{section.id}}" id="skewBlogType">        
+          {% for article in blogs[section.settings.pick_featured_blog].articles   %}   
+          <div class="article-item grid__item wow bounceInUp">
+            <div class="article">
+              <div class="home-blog-image grid__item">
+                {% if article.image %}
+                <a href="{{ article.url }}">
+                  <img src="{{ article.image.src | img_url: '1024x1024' }}" alt="{{ article.title }}" />
+                </a>
+                {% endif %}
+              </div>
+              <div class="blog-description grid__item">
+                <div class="home-blog-content blog-detail">				
+                  <h4><a href="{{ article.url }}">{{ article.title }}</a></h4>
+                  
+                  
+                </div>
+                <div class="blogs-sub-title">
+                  {% if section.settings.show_featured_date %}
+                  <div class="blog-date" style="color:{{ section.settings.blog_design_4_datecolor }};">
+                    <span> Posted on </span>
+                    <span data-datetime="{{ article.published_at | date: '%Y-%m-%d' }}"><span class="date">{{ article.published_at | date: '%b' }} {{ article.published_at | date: '%d' }} , {{ article.published_at | date: '%Y' }}</span></span>             
+                  </div>
+                  {% endif %} 
+                  {% if article.comments_enabled? %}
+                  {% assign number_of_comments = article.comments_count %}
+                  {% if section.settings.blog_comment %}
+                  <p class="comments-count"><i class="far fa-comment"></i>{{  number_of_comments }} {{ 'blogs.comments.comments' | t }}</p>
+                  {% endif %}
+                  {% endif %}
+                  <p class="author" style="color:{{ section.settings.blog_design_4_authorcolor }}">
+                    {% if section.settings.blog_author_enable %}            
+                    <span> by </span>
+                    <span> {{ article.author }}</span>
+                    {% endif %}
+                  </p>
+                  {% if article.tags.size > 0 and section.settings.show_blog_4_tag %}
+                  <div class="blog-tag">
+                    <i class="fas fa-tag"></i>
+                    {% for tag in article.tags %}
+                    <a class="blog-tags" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last %} <span class="meta-sep">&#44;</span> {% endunless %}
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+                {% if section.settings.blog_description %}
+                  <p style="color:{{ section.settings.blog_desc_clr }};">{{ article.content | strip_html | truncate:180 }}</p>
+                  {% endif %}
+                {% if section.settings.show_blog_4_btn %}
+                <div class="blog-btn">
+                  <a class="" href="{{ article.url }}">{{ section.settings.btn }} <i class="fa fa-angle-right"></i></a>
+                </div>
+                {% endif %}
+              </div>
+            </div>  
+          </div>
+          {% else %}
+          {% for i in (1..3) %}
+          <div class="article-item grid__item wow bounceInUp animated" style="visibility: visible;">
+            <div class="article">
+              <div class="home-blog-image grid__item">
+                
+                <a href="/blogs/news/the-best-is-yet-to-come-framed">
+                  <img src="//cdn.shopify.com/s/files/1/0179/0453/3558/articles/blog-1_1024x1024.jpg?v=1569487508" alt="The Best is yet to come' framed">
+                </a>
+                
+              </div>
+              <div class="blog-description grid__item">
+                <div class="blogs-sub-title">
+                  
+                  <div class="blog-date" style="color:#777777;">
+                    <span> Posted on </span>
+                    <span data-datetime="2019-09-24"><span class="date">Mar 1{{i}} , 2018</span></span>             
+                  </div>
+                   
+                  
+                  <p class="author" style="color:#777777">
+                                
+                    <span> by </span>
+                    <span> Author Name</span>
+                    
+                  </p>
+                </div>
+                <div class="home-blog-content blog-detail">				
+                  <h6><a href="/blogs/news/the-best-is-yet-to-come-framed">Sample post {{ i }}</a></h6>
+                  
+                  
+                </div>
+                
+                <div class="blog-btn">
+                  <a class="" href="/blogs/news/the-best-is-yet-to-come-framed">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+                
+              </div>
+            </div>  
+          </div>
+          {% endfor %}
+          {% endfor %}
+        </div>
+        <div class="nav_article {{section.id}}"> </div>
+          
+      </div>
+
+      <style>
+        .blog-design-11 .blog-detail h4 a { color:{{ section.settings.blog_design_4_title }}  }
+        
+        .blog-design-11 .blog-detail .comments-count { color:{{ section.settings.blog_design_commentcolor }}; }
+        .blog-design-11 .comments-count:before { background:{{ section.settings.blog_design_commentcolor }}; }
+        .blog-design-11 .blog-tag a { color:{{ section.settings.blog_design_4_tag }}; }
+        .blog-design-11 .blog-tag a:hover { color:{{ section.settings.blog_design_4_taghover }}; }
+        .blog-design-11 .blog-tag i {  color:{{ section.settings.blog_design_4_titlehover }} ;margin-right:5px; }
+        {% if section.settings.heading_image_need %} .blog-design-11 .border-title:after {  content:"";background-image:url({{ section.settings.heading_image | img_url: 'master' }});display:inline-block;background-repeat:no-repeat;background-position:top center;width:108px;height:12px;} {% endif %} 
+     
+        .blog-design-11 .blog-description .blog-btn a,.blog-design-11 .blog-description .blog-btn a i { color:{{ section.settings.btn_text_clr }}; }
+        .blog-design-11 .blog-description .blog-btn a:hover,.blog-design-11 .blog-description .blog-btn a:hover i { color:{{ section.settings.btn_hover_clr }}; }
+        .blog-design-11 .blog-description .blog-btn a{background:{{ section.settings.btn_bg_clr }}; }
+        .blog-design-11 .blog-description .blog-btn a:hover{background:{{ section.settings.btn_bg_hvrclr }}; }
+        
+      </style>
+    </div>
+  </div>
+
+ 
+
+
+</div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+  var  skewBlogType = $(".skewBlogType.{{section.id}}");
+    skewBlogType.owlCarousel({
+      loop:false,
+      margin:0,
+      autoPlay: false,
+      nav:false,  
+                     navContainer: ".blog-design-11 .nav_article.{{section.id}}",
+      navText: ['<a class="prev"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>','<a class="next"><i class="fas fa-arrow-right" aria-hidden="true"></i></a>'],     
+      dots:true,
+      responsive:{
+        0:{
+          items:1,
+           dots:false,             
+           nav:true          
+        },
+        568:{
+          items:2,
+          dots:false,              
+          nav:true           
+        },
+        768:{
+          items:3
+        }
+      }
+    });   
+  }); 
+
+</script>
+
+
+{% schema %}
+{
+"name": "Blog Post",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "checkbox",
+"id": "heading_image_need",
+"label": "Show Heading Image ?"
+
+},	
+{
+"type": "image_picker",
+"id": "heading_image",
+"label": "Image",
+"info": "Size: 133x56"
+
+},	
+{
+"type": "color",
+"id": "title_clr",
+"label": "Heading",
+"default": "#000"
+},
+{
+"type": "blog",
+"id": "pick_featured_blog",
+"label": "Select blog"
+},
+{
+"type": "checkbox",
+"id": "blog_author_enable",
+"label": "Display Blog author name"
+},
+{
+"type": "checkbox",
+"id": "show_blog_4_btn",
+"label": "Display Blog button"
+},
+{
+"type": "checkbox",
+"id": "show_featured_date",
+"label": "Display Blog date"
+},
+{
+"type": "checkbox",
+"id": "show_blog_4_tag",
+"label": "Display Blog tag"
+},
+{
+"type": "color",
+"id": "blog_design_4_title",
+"label": "Blog  title color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_4_titlehover",
+"label": "Blog  title hover color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_4_datecolor",
+"label": "Blog date color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_4_authorcolor",
+"label": "Blog author  color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_commentcolor",
+"label": "Blog comment color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_4_tag",
+"label": "Blog tag color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "blog_design_4_taghover",
+"label": "Blog tag hover",
+"default": "#000"
+},
+
+{
+"type": "checkbox",
+"id": "blog_comment",
+"label": "Show Comment"
+},
+{
+"type": "color",
+"id": "blog_comment_text",
+"label": "Comment Color",
+"default": "#000"
+},
+{
+"type": "checkbox",
+"id": "blog_description",
+"label": "Show description"
+},
+{
+"type": "color",
+"id": "blog_desc_clr",
+"label": "Description Color",
+"default": "#000"
+},
+{
+"type": "text",
+"id": "btn",
+
+"label": "Link",
+"default": "Read more"
+},
+{
+"type": "color",
+"id": "btn_text_clr",
+"label": "Button Color",
+"default": "#777777"
+},
+{
+"type": "color",
+"id": "btn_bg_clr",
+"label": "Button bg Color",
+"default": "#777777"
+},
+{
+"type": "color",
+"id": "btn_hover_clr",
+"label": "Button Hover Color",
+"default": "#231f1e"
+},
+{
+"type": "color",
+"id": "btn_bg_hvrclr",
+"label": "Button bg hvr Color",
+"default": "#777777"
+}
+],
+"presets": [
+{
+"name": "Blog Post",
+"category": "blog"
+}
+]
+}
+{% endschema %}
+
+

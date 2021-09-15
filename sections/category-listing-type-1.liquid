@@ -1,0 +1,181 @@
+
+<div data-section-id="{{ section.id }}"  data-section-type="category-listing-type-1" class="category-listing-type-1">  
+  <div class="container">
+  <div class="grid-uniform">   
+    {% if section.settings.title != blank %}
+        <div class="border-title" style="color:{{ section.settings.title_color }};"> 
+        <h2>{{ section.settings.title }}</h2>
+        </div>
+        {% endif %}
+    <ul class="category-listing_block">         
+      {% if section.blocks.size > 0 %}      
+      {% for block in section.blocks %}
+      {% case section.blocks.size %}
+      {% when 1 %}
+      {%- assign block_width = 'one-whole text-center' -%}
+      {% when 2 %}
+      {%- assign block_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+      {% when 3 %}
+      {%- assign block_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+      {% when 4 %}
+      {%- assign block_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+       {% else %}
+      {%- assign block_width = 'wide--one-third post-large--one-third large--one-half medium--one-half small-grid__item' -%}
+      {% endcase %}
+      <li class="grid__item {{ block_width }} wow fadeInUp"  data-wow-delay="{{ settings.time_lazy_load }}ms">
+        <div class="category-listing_section">                      
+          <div class="category-listing_inner" style="background:{{ section.settings.bg_bolor }};">    
+           <div class="category_heading">
+            {% if block.settings.icon != blank  %}  
+              <img src="{{ block.settings.icon | img_url: "50x50" }}" alt="{{ block.settings.title }}" />   
+            {% else %}
+          <img src="//via.placeholder.com/50x50">
+              {% endif %}   
+             {% if block.settings.sub_title != blank  %}  
+              <h4 style="color:{{ section.settings.sub_title_clr }};">{{ block.settings.sub_title}}</h4>
+              {% endif %} 
+            </div>   
+            <div class="category_text"> 
+              <ul>
+                {% for link in linklists[block.settings.linkedlist].links %}
+                <li>
+                  <a style="color:{{ section.settings.linkedlist_color }};" href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endfor %}
+              </ul> 
+            </div>  
+            <div class="category_image"> 
+              {% if block.settings.image != blank  %}  
+              <img src="{{ block.settings.image | img_url: "400x" }}" alt="{{ block.settings.title }}" />
+              {% else %}
+             <img src="//via.placeholder.com/400x400">
+              {% endif %}   
+            </div>
+
+
+          </div>
+        </div>       
+      </li>  
+      {% endfor %}
+      {% endif %}
+    </ul>
+    
+  </div>
+  </div>
+</div>
+<style>
+  .category-listing_inner ul li a:hover { color:{{ section.settings.linkedlist_hover_color }} !important; }
+  .category_heading h4{ background:{{section.settings.title_bg_color}}; }
+  .category_heading img{ background:{{section.settings.icon_bg_clr}}; border-color:{{section.settings.sub_title_clr}}}
+</style>
+{% schema %}
+{
+"name": "Category Listing",
+"class": "index-section",
+"max_blocks":6,
+"settings": [
+{
+"type": "color",
+"id": "title_bg",
+"label": "Title Bg",
+"default": "#f2f2f2"
+},
+	{
+"type": "text",
+"id": "title",
+"label": "Heading"
+},
+{
+"type": "color",
+"id": "bg_bolor",
+"label": "Bg color",
+"default": "#fff"   
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Heading",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "linkedlist_color",
+"label": "Links color",
+"default": "#ccc"
+},
+{
+"type": "color",
+"id": "linkedlist_hover_color",
+"label": "Links hover color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "icon_bg_clr",
+"label": "icon bg color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "sub_title_clr",
+"label": "Heading color",
+"default": "#000"
+},
+{
+"type": "color",
+"id": "title_bg_color",
+"label": "Heading bg color",
+"default": "#000"
+}
+],
+"blocks": [
+{
+"type": "link_list",
+"name": "Category",
+"settings": [ 
+{
+"type": "image_picker",
+"id": "icon",
+"label": "Icon"        
+},
+
+{
+"type": "text",
+"id": "sub_title",
+"label": "Heading",
+"default": "Heading"
+},
+
+{
+"type": "link_list",
+"id": "linkedlist",
+"label": "Linked list"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"        
+}
+]
+}
+],
+"presets": [
+{
+"name": "Category Listing",
+"category": "link_list",
+"blocks": [
+{
+"type": "link_list"
+},
+{
+"type": "link_list"
+},
+{
+"type": "link_list"
+}
+
+]
+}
+]
+}
+{% endschema %}

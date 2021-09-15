@@ -1,0 +1,290 @@
+<div data-section-id="{{ section.id }}"  data-section-type="home-product-grid-type-6" class="home-product-grid-type-6">
+ <div class="container"> 
+  {%- assign collection = collections[section.settings.collection] -%}
+  {%- assign limit = section.settings.grid | times: section.settings.rows -%}  
+  <div class="full_width_tab load-wrapper">       
+        
+    {% case section.settings.grid %}
+    {% when '2' %}
+    {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+    {% when '3' %}
+    {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item' -%}
+    {% when '4' %}
+    {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+    {% when '5' %}
+    {%- assign grid_item_width = 'wide--one-fifth post-large--one-fifth large--one-third medium--one-half small-grid__item' -%}            
+    {% endcase %}
+
+    {% if section.settings.alignment == 'right' or  section.settings.alignment == 'left' %} 
+    {%- assign grid_mid_width = 'wide--three-fifths post-large--two-thirds large--four-sixths medium--grid__item small-grid__item' -%}
+
+    {% else %}
+    {%- assign grid_mid_width = ' ' -%}
+    {% endif%}  
+
+
+    <div class="grid-uniform">
+      {% if section.settings.alignment == 'left' %}
+      <div class="grid__item wide--three-fifths post-large--two-thirds large--four-sixths medium--grid__item small-grid__item left">
+         
+        <ul class="type4__singele_items">
+          {% for product in collection.products limit:1 %}
+          {% include 'deal-grid-item-single'  %}  
+          {% else %}
+          {% for i in (1..1) %}
+          {% include 'empty-row' %}          
+          {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="grid__item {{ grid_mid_width }}">  
+         {% if section.settings.title != blank or section.settings.small_title  %}
+    <div class="section-header section-header--small">
+      <div class="border-title">
+        {% endif %}       
+        {% if section.settings.title != blank %}
+        <h4 class="section-header__title" style="color:{{section.settings.title_clr }};">    
+          {{ section.settings.title }}
+        </h4>
+        {% endif %}
+        {% if section.settings.small_title != blank %} <div class="short-desc"> <p style="color:{{section.settings.small_title_clr }};">{{ section.settings.small_title }}</p></div>{% endif %}  
+        {% if section.settings.title != blank or section.settings.small_title  %}
+        {% if section.settings.header_image_show %}<span style="margin-top:10px;background:url('{{ section.settings.header_image | img_url: 'master' }}');background-repeat:no-repeat;width:165px;height:36px;text-align:center;margin:auto;display:block;"></span>{% endif %}      </div>
+     
+    </div>    
+
+    
+    {% endif %} 
+        <ul class="type4__items">
+          {% for product in collection.products limit:limit offset:1   %}
+          {% include 'product-grid-item', grid_item_width:grid_item_width %}          
+          {% else %}
+          {% for i in (1..6) %}
+          {% include 'empty-row' %}          
+          {% endfor %}
+          {% endfor %}
+        </ul>      
+      </div>
+    
+      {% if section.settings.alignment == 'right' %}
+      <div class="grid__item wide--two-fifths post-large--one-third large--two-sixths medium--grid__item small-grid__item right">
+        {% if section.settings.title != blank or section.settings.small_title  %}
+    
+      <div class="border-title">
+        {% endif %}       
+        {% if section.settings.sub_title != blank %}
+        <h4 class="section-header__title" style="color:{{section.settings.sub_title_clr }};">    
+          {{ section.settings.sub_title }}
+        </h4>
+        {% endif %}
+        {% if section.settings.small_title != blank %} <div class="short-desc"> <p style="color:{{section.settings.small_title_clr }};">{{ section.settings.small_title }}</p></div>{% endif %}  
+        {% if section.settings.title != blank or section.settings.small_title  %}
+        {% if section.settings.header_image_show %}<span style="margin-top:10px;background:url('{{ section.settings.header_image | img_url: 'master' }}');background-repeat:no-repeat;width:165px;height:36px;text-align:center;margin:auto;display:block;"></span>{% endif %}      </div>
+     
+      
+
+   
+    {% endif %} 
+        <ul class="type4__singele_items">
+          {% for product in collection.products limit:1 %}
+          {% include 'deal-grid-item-single'  %}   
+          {% else %}
+          {% for i in (1..1) %}
+          {% include 'empty-row' %}          
+          {% endfor %}
+          {% endfor %}
+       <div class="deal-clock lof-clock-timer-detail "></div>
+            {% assign dealTime = section.settings.deal_end_date | replace: '_',' ' %}  
+            <div class="deal-content wow fadeInUp animated">
+
+
+              <script>
+                //<![CDATA[
+                jQuery(document).ready(function($){
+                  $(".lof-clock-timer-detail").lofCountDown({      
+                    TargetDate:"{{ dealTime }}",
+                    DisplayFormat:"<ul class='list-inline'><li class='day'>%%D%%<span>Days</span></li><li class='hours'>%%H%%<span>Hours</span></li><li class='mins'>%%M%%<span>Minutes</span></li><li class='seconds'>%%S%%<span>Seconds</span></li></ul>",
+                    FinishMessage: "Expired"
+                  });
+                });
+                //]]>
+              </script> 
+              {% if section.settings.button_1 != blank %}
+              <a class="btn"  href="{{ section.settings.link_1 }}">{{ section.settings.button_1 }}</a>    
+              {% endif %}           
+            </div>  
+        </ul>
+          
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </div> 
+  
+</div>  
+
+
+
+{% schema %}
+{
+"name": "Home Product Grid 2",
+"class": "index-section",
+"max_blocks": 2,
+"settings": [  
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "New arrivals"
+},	
+{
+"type": "checkbox",
+"id": "header_image_show",
+"label": "Heading Image ?"
+},
+{
+"type": "image_picker",
+"id": "header_image",
+"label": "Heading Image",
+"info": "Size: 165x36"
+},
+{
+"type": "color",
+"id": "title_clr",
+"label": "Heading Color",
+"default": "#000"
+},	
+{
+"type": "text",
+"id": "small_title",
+"label": "Small Heading"      
+},	
+{
+"type": "color",
+"id": "small_title_clr",
+"label": "Small Heading Color",
+"default": "#000"      
+},	
+{
+"type": "text",
+"id": "sub_title",
+"label": "Right Heading",
+"default": "New arrivals"
+},
+{
+"type": "color",
+"id": "sub_title_clr",
+"label": "Right Heading Color",
+"default": "#000"
+},	
+{
+"id": "collection",
+"type": "collection",
+"label": "Collection"
+},
+
+{
+"type": "select",
+"id": "alignment",
+"label": "Featured product alignment",
+"default": "left",
+"options": [
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "right",
+"label": "Right"
+},
+{
+"value": "none",
+"label": "None"
+}   
+]
+},
+
+{
+"type": "select",
+"id": "grid",
+"label": "Products per row",
+"default": "3",
+"options": [
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}
+
+]
+},
+{
+"type": "select",
+"id": "rows",
+"label": "Rows per page (grid only)",
+"default": "2",
+"options": [
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+}
+
+]
+},
+
+{
+"type": "text",
+"id": "deal_end_date",
+"label": "Deal end date",
+"info": "format should be MM/DD/YYYY_HH:MM:SS "
+}
+
+],
+
+"blocks": [
+{
+"type": "Image",
+"name": "Featured Image",
+"settings": [	
+{
+"type": "image_picker",
+"id":"image_featured",
+"label":"Image",
+"info": "Size: 900x755"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Home Product Grid 2",
+"category": "Collection"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+

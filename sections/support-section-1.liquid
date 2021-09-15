@@ -1,0 +1,104 @@
+<div data-section-id="{{ section.id }}"  data-section-type="support-block-type-1" class="support-block-type-1" style="background:{{ section.settings.bg_color }};float:left;width:100%;">     
+  <div class="grid-uniform">
+    <div class="wrapper">
+      <ul class="support_block" >         
+        {% for block in section.blocks %}
+          <li class="grid__item wide--one-third post-large--one-third large--one-third medium--one-half small-grid__item">
+          <div class="support_section"> 
+            <div class="support_text"> 
+              {% if block.settings.title != blank  %}  
+              <a href="{{block.settings.link}}" style="color:{{ section.settings.title_color }};"> 
+                <h5 style="color:{{ section.settings.title_color }};">{{ block.settings.title }}</h5></a>
+              {% endif %} 
+            </div>      
+          </div>    
+        </li>  
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+
+<style>
+
+  
+
+  .support-block-type-1 .support_section .support_text h5 {border-left:1px solid {{section.settings.txteborder_color}};}
+
+</style>
+
+
+{% schema %}
+{
+"name": "Support Section",
+"class": "index-section",
+"settings": [ 
+{
+"type": "color",
+"id": "bg_color",
+"label": "Bg Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "topborder_color",
+"label": "Top Border Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "txteborder_color",
+"label": "Text Between Border Color",
+"default":"#000"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Text Color",
+"default":"#B5000E"
+}
+],
+"blocks" : [
+		{
+			"type": "text",
+			"name": "support",
+			"settings": [
+				{
+              "type": "checkbox",
+              "id": "show",
+              "label": "show"          
+              },
+              {
+              "type": "text",
+              "id": "title",
+              "label": "Heading"          
+              },              
+              {
+              "type": "url",
+              "id": "link",
+              "label": "Link"          
+              }
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "support ",
+			"category": "Text",
+			"blocks": [	
+				{
+					"type": "text"
+				},
+				{
+					"type": "text"
+				},
+				{
+					"type": "text"
+				}
+			]
+		}
+	]
+}
+{% endschema %}
